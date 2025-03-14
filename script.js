@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Configurações
-    const API_ENDPOINT = window.__ENV__[AWSLAMBDA];
+    const API_ENDPOINT = 'https://eys6hijfa4.execute-api.us-east-2.amazonaws.com/default/RemovePDFPassword';
     const MAX_FILE_SIZE_MB = 3;
     
     // Elementos do DOM
