@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remover Senha de PDF</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container-fluid bg-primary text-white p-4">
+        <div class="container">
+            <h1><i class="fas fa-unlock-alt me-2"></i>Remover Senha de PDF</h1>
+            <p class="lead">Ferramenta segura para remover proteções de senha de documentos PDF</p>
+        </div>
+    </div>
+
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            Seus arquivos são processados com segurança e não são armazenados em nossos servidores.
+                        </div>
+                        
+                        <!-- Formulário -->
+                        <form id="pdfForm">
+                            <div class="mb-4">
+                                <label for="pdfFile" class="form-label fw-bold">Selecione o arquivo PDF:</label>
+                                <div class="input-group">
+                                    <input type="file" class="form-control" id="pdfFile" accept=".pdf" required>
+                                    <label class="input-group-text" for="pdfFile"><i class="fas fa-file-pdf"></i></label>
+                                </div>
+                                <div class="form-text">Tamanho máximo: 3MB</div>
+                                <div id="fileInfo" class="mt-2 d-none">
+                                    <span class="badge bg-primary"></span>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="pdfPassword" class="form-label fw-bold">Senha do PDF:</label>
+                                <div class="input-group">
+                                    <input type="password" class="form-control" id="pdfPassword" required>
+                                    <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">
+                                    <i class="fas fa-lock-open me-2"></i>Remover Senha
+                                </button>
+                            </div>
+                        </form>
+                        
+                        <!-- Indicador de progresso -->
+                        <div class="mt-4 d-none" id="progressContainer">
+                            <p class="text-center"><i class="fas fa-spinner fa-spin me-2"></i>Processando...</p>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%"></div>
+                            </div>
+                        </div>
+
+                        <!-- Resultado -->
+                        <div class="mt-4 d-none" id="resultContainer">
+                            <div class="alert alert-success">
+                                <i class="fas fa-check-circle me-2"></i>PDF processado com sucesso!
+                            </div>
+                            <div class="d-grid gap-2">
+                                <a id="downloadBtn" class="btn btn-success btn-lg" href="#" download="documento-sem-senha.pdf">
+                                    <i class="fas fa-download me-2"></i>Baixar PDF sem senha
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Erro -->
+                        <div class="mt-4 d-none" id="errorContainer">
+                            <div class="alert alert-danger">
+                                <i class="fas fa-exclamation-circle me-2"></i>
+                                <span id="errorMessage">Ocorreu um erro.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mt-4 shadow">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-shield-alt me-2"></i>Segurança e Privacidade</h5>
+                        <p>Todo o processamento é realizado diretamente em seu navegador e no servidor AWS. Os arquivos não são armazenados permanentemente.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white text-center p-4 mt-5">
+        <div class="container">
+            <p class="mb-0">Ferramenta para Remover Senha de PDF &copy; <span id="currentYear"></span></p>
+            <p class="small">Processamento seguro de documentos PDF</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Script personalizado -->
+    <script src="script.js"></script>
+</body>
+</html>

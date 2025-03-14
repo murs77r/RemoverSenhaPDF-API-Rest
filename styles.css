@@ -1,0 +1,75 @@
+body {
+    background-color: #f8f9fa;
+}
+
+.card {
+    border-radius: 0.5rem;
+    border: none;
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+.btn-primary {
+    background-color: #4361ee;
+    border-color: #4361ee;
+}
+
+.btn-primary:hover {
+    background-color: #3a56d4;
+    border-color: #3a56d4;
+}
+
+.btn-success {
+    background-color: #38b000;
+    border-color: #38b000;
+}
+
+.btn-success:hover {
+    background-color: #2d9200;
+    border-color: #2d9200;
+}
+
+.bg-primary {
+    background-color: #4361ee !important;
+}
+
+.form-label {
+    font-size: 1rem;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 0.25rem rgba(67, 97, 238, 0.25);
+    border-color: #4361ee;
+}
+
+#fileInfo .badge {
+    font-size: 0.9rem;
+    font-weight: normal;
+}
+
+.progress {
+    height: 0.5rem;
+    border-radius: 1rem;
+}
+
+footer {
+    margin-top: auto;
+}
+
+/* Animação sutil */
+.btn, .card {
+    transition: all 0.3s ease;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+/* Responsividade para telas pequenas */
+@media (max-width: 576px) {
+    .card-body {
+        padding: 1.5rem;
+    }
+}
