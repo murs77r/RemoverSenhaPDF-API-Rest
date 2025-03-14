@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Configurações
-    const API_ENDPOINT = AWSLAMBDA;
+    const API_ENDPOINT = window.__ENV__[AWSLAMBDA];
     const MAX_FILE_SIZE_MB = 3;
     
     // Elementos do DOM
