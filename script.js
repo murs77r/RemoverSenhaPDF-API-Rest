@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Configurações
-    const API_ENDPOINT = 'https://api.class-one.com.br/PDF';
+    const API_ENDPOINT = 'https://api.class-one.com.br/RemovePDFPassword';
     const MAX_FILE_SIZE_MB = 3;
     
     // Elementos do DOM
