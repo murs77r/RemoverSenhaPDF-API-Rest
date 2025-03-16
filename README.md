@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🔓 Removedor de Senhas de PDF
 
 Esta aplicação web permite aos usuários remover senhas de proteção de arquivos PDF de forma simples, segura e eficiente. Utilizando uma API REST, o serviço processa os documentos sem armazenar informações em servidores.
@@ -40,3 +41,5 @@ A aplicação está implantada no Cloudflare Pages, com utilização específica
 - Tamanho máximo de arquivo: 3MB
 - Compatível com PDFs protegidos por senha de acesso
 - Necessário conhecer a senha atual do documento
+=======
+>>>>>>> 8ebc4962e6612f15399c8b1bd3d2d65d5d773fd2
