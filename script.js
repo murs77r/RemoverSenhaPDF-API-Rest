@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Configurações
-    const API_ENDPOINT = 'https://api.class-one.com.br/';
+    const API_ENDPOINT = 'https://xpqqgwexqa.execute-api.us-east-1.amazonaws.com/implantacao_1/';
     const MAX_FILE_SIZE_MB = 3;
     
     // Elementos do DOM
