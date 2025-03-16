@@ -71,7 +71,14 @@ footer {
     transform: scale(0.98);
 }
 
-/* Responsividade para telas pequenas */
+.bg-dark {
+    background-color: (255, 255, 255, 0.03) !important;
+}
+
+.h1 {
+    font-weight: 1000;
+}
+
 @media (max-width: 576px) {
     .card-body {
         padding: 1.5rem;
