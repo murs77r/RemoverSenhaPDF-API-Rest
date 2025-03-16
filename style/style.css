@@ -1,10 +1,14 @@
 body {
-    background-color: #f8f9fa;
+    background-color: #121212;
+    font-family: 'Nunito', sans-serif;
+    color: #ffffff;
 }
 
 .card {
     border-radius: 0.5rem;
     border: none;
+    background-color: hsl(0, 0%, 12%);
+    color: #ffffff;
 }
 
 .card-body {
@@ -32,7 +36,7 @@ body {
 }
 
 .bg-primary {
-    background-color: #4361ee !important;
+    background-color: #181818 !important;
 }
 
 .form-label {
@@ -72,4 +76,9 @@ footer {
     .card-body {
         padding: 1.5rem;
     }
+}
+
+.alert {
+    background-color: #2f2f2f;
+    color: #ffffff;
 }
