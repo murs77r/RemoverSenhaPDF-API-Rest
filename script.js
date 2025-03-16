@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 resultContainer.classList.remove('d-none');
             } else {
                 // Erro retornado pela API
-                showError(responseData.message || 'Erro ao processar o PDF');
+                showError(responseData.error || responseData.message || 'Erro ao processar o PDF');
             }
         } catch (error) {
             showError('Ocorreu um erro ao se comunicar com o servidor');
