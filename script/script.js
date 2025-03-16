@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 resultMessage.textContent = "PDF processado com sucesso!";
                 
                 // Mostrar container de resultado
-                showDownloadModal(downloadUrl, getOutputFilename("file.name, '-sem-senha'"), "PDF processado com sucesso!");
+                showDownloadModal(downloadUrl, getOutputFilename(file.name, '-sem-senha'), "PDF processado com sucesso!");
             } else {
                 // Erro retornado pela API
                 showError(responseData.error || responseData.message || 'Erro ao processar o PDF');
