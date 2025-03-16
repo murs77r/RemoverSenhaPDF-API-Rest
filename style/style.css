@@ -15,7 +15,7 @@ body {
     padding: 2rem;
 }
 
-.btn:hover {
+.btn-corrig:hover {
     background-color: #ffffff45!important;
     color: #fff!important;
 }
