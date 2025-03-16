@@ -77,7 +77,8 @@ footer {
 
 h1 {
     font-weight: 1000 !important;
-    text-align: center;
+    text-align: center !important;
+    margin: 0px !important;
 }
 
 @media (max-width: 576px) {
