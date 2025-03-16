@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const errorContainer = document.getElementById('errorContainer');
     const errorMessage = document.getElementById('errorMessage');
     const currentYear = document.getElementById('currentYear');
+    const infoAlert = document.querySelector('.alert-info');
     
     const pdfForm = document.getElementById('pdfForm');
     const pdfFileInput = document.getElementById('pdfFile');
@@ -31,6 +32,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const convertBtn = document.getElementById('convertBtn');
     
     currentYear.textContent = new Date().getFullYear();
+    
+    pdfFileInput.value = '';
+    convertFileInput.value = '';
+    fileInfoContainer.classList.add('d-none');
+    if (convertFileInfoContainer) {
+        convertFileInfoContainer.classList.add('d-none');
+    }
     
     function setupPasswordToggle(inputElement, toggleButton) {
         toggleButton.addEventListener('click', function() {
@@ -233,10 +241,19 @@ document.addEventListener('DOMContentLoaded', function() {
     function showError(message) {
         errorMessage.textContent = message;
         errorContainer.classList.remove('d-none');
+        
+        // Ocultar o alerta informativo quando um erro é mostrado
+        if (infoAlert) {
+            infoAlert.classList.add('d-none');
+        }
     }
     
     function hideError() {
         errorContainer.classList.add('d-none');
+        
+        if (infoAlert) {
+            infoAlert.classList.remove('d-none');
+        }
     }
 
     function showDownloadModal(downloadUrl, fileName, message) {
