@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if (response.ok) {
                 // Sucesso
-                const pdfData = responseData.pdfBase64;
+                const pdfData = responseData.pdfbase64;
                 const downloadUrl = `data:application/pdf;base64,${pdfData}`;
                 
                 // Configurar botão de download
