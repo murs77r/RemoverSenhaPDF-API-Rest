@@ -85,6 +85,28 @@ h1 {
     margin: 0px !important;
 }
 
+/* Substituindo a regra atual */
+.nav-link:hover:not(.active), .nav-link {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Novas regras para melhor controle dos estados dos links */
+.nav-link {
+    color: rgb(255 255 255) !important
+}
+
+.nav-link:hover:not(.active) {
+    color: #ffffff;
+}
+
+.nav-link.active {
+    color: #000 !important;
+}
+
+.modal-content {
+    padding: 10px 15px!important;
+}
+
 @media (max-width: 576px) {
     .card-body {
         padding: 1.5rem;

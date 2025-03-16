@@ -1,9 +1,22 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Configurações
-    const API_ENDPOINT = 'https://api.class-one.com.br/remove-pdf-password';
+    const API_ENDPOINTS = {
+        removePassword: 'http://127.0.0.1:5000/remove-pdf-password',
+        pdfToImage: 'http://127.0.0.1:5000/pdf-to-image'
+    };
     const MAX_FILE_SIZE_MB = 3;
     
-    // Elementos do DOM
+    // Elementos do DOM comuns
+    const progressContainer = document.getElementById('progressContainer');
+    const resultContainer = document.getElementById('resultContainer');
+    const resultMessage = document.getElementById('resultMessage');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const downloadBtnText = document.getElementById('downloadBtnText');
+    const errorContainer = document.getElementById('errorContainer');
+    const errorMessage = document.getElementById('errorMessage');
+    const currentYear = document.getElementById('currentYear');
+    
+    // Elementos para remover senha
     const pdfForm = document.getElementById('pdfForm');
     const pdfFileInput = document.getElementById('pdfFile');
     const pdfPasswordInput = document.getElementById('pdfPassword');
@@ -11,47 +24,62 @@ document.addEventListener('DOMContentLoaded', function() {
     const fileInfoBadge = fileInfoContainer.querySelector('.badge');
     const togglePasswordBtn = document.getElementById('togglePassword');
     const submitBtn = document.getElementById('submitBtn');
-    const progressContainer = document.getElementById('progressContainer');
-    const resultContainer = document.getElementById('resultContainer');
-    const downloadBtn = document.getElementById('downloadBtn');
-    const errorContainer = document.getElementById('errorContainer');
-    const errorMessage = document.getElementById('errorMessage');
-    const currentYear = document.getElementById('currentYear');
+    
+    // Elementos para converter PDF para imagem
+    const convertForm = document.getElementById('convertForm');
+    const convertFileInput = document.getElementById('convertFile');
+    const convertPasswordInput = document.getElementById('convertPassword');
+    const convertFileInfoContainer = document.getElementById('convertFileInfo');
+    const convertFileInfoBadge = convertFileInfoContainer?.querySelector('.badge');
+    const toggleConvertPasswordBtn = document.getElementById('toggleConvertPassword');
+    const convertBtn = document.getElementById('convertBtn');
     
     // Definir o ano atual no rodapé
     currentYear.textContent = new Date().getFullYear();
     
-    // Mostrar informações do arquivo quando selecionado
-    pdfFileInput.addEventListener('change', function() {
-        if (this.files.length > 0) {
-            const file = this.files[0];
-            const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
-            
-            fileInfoBadge.textContent = `${file.name} (${fileSizeMB} MB)`;
-            fileInfoContainer.classList.remove('d-none');
-            
-            // Verificar se o tamanho do arquivo é maior que o permitido
-            if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
-                showError(`O arquivo excede o tamanho máximo de ${MAX_FILE_SIZE_MB}MB`);
-                pdfFileInput.value = '';
-                fileInfoContainer.classList.add('d-none');
+    // Funções para alternar visibilidade de senha
+    function setupPasswordToggle(inputElement, toggleButton) {
+        toggleButton.addEventListener('click', function() {
+            const type = inputElement.type === 'password' ? 'text' : 'password';
+            inputElement.type = type;
+            this.querySelector('i').classList.toggle('fa-eye');
+            this.querySelector('i').classList.toggle('fa-eye-slash');
+        });
+    }
+    
+    // Configurar alternância de senha para ambos os inputs
+    setupPasswordToggle(pdfPasswordInput, togglePasswordBtn);
+    setupPasswordToggle(convertPasswordInput, toggleConvertPasswordBtn);
+    
+    // Função para lidar com mudança de arquivo
+    function handleFileChange(fileInput, infoContainer, infoBadge) {
+        fileInput.addEventListener('change', function() {
+            if (this.files.length > 0) {
+                const file = this.files[0];
+                const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
+                
+                infoBadge.textContent = `${file.name} (${fileSizeMB} MB)`;
+                infoContainer.classList.remove('d-none');
+                
+                // Verificar se o tamanho do arquivo é maior que o permitido
+                if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
+                    showError(`O arquivo excede o tamanho máximo de ${MAX_FILE_SIZE_MB}MB`);
+                    fileInput.value = '';
+                    infoContainer.classList.add('d-none');
+                } else {
+                    hideError();
+                }
             } else {
-                hideError();
+                infoContainer.classList.add('d-none');
             }
-        } else {
-            fileInfoContainer.classList.add('d-none');
-        }
-    });
+        });
+    }
     
-    // Alternar visibilidade da senha
-    togglePasswordBtn.addEventListener('click', function() {
-        const type = pdfPasswordInput.type === 'password' ? 'text' : 'password';
-        pdfPasswordInput.type = type;
-        this.querySelector('i').classList.toggle('fa-eye');
-        this.querySelector('i').classList.toggle('fa-eye-slash');
-    });
+    // Configurar manipuladores de mudança de arquivo
+    handleFileChange(pdfFileInput, fileInfoContainer, fileInfoBadge);
+    handleFileChange(convertFileInput, convertFileInfoContainer, convertFileInfoBadge);
     
-    // Manipular envio do formulário
+    // Manipular envio do formulário para remover senha
     pdfForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         
@@ -87,7 +115,7 @@ document.addEventListener('DOMContentLoaded', function() {
             };
             
             // Enviar para a API
-            const response = await fetch(API_ENDPOINT, {
+            const response = await fetch(API_ENDPOINTS.removePassword, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -105,10 +133,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Configurar botão de download
                 downloadBtn.href = downloadUrl;
-                downloadBtn.download = getOutputFilename(file.name);
+                downloadBtn.download = getOutputFilename(file.name, '-sem-senha');
+                downloadBtnText.textContent = "Baixar PDF sem senha";
+                
+                // Configurar mensagem
+                resultMessage.textContent = "PDF processado com sucesso!";
                 
                 // Mostrar container de resultado
-                resultContainer.classList.remove('d-none');
+                showDownloadModal(downloadUrl, getOutputFilename("file.name, '-sem-senha'"), "PDF processado com sucesso!");
             } else {
                 // Erro retornado pela API
                 showError(responseData.error || responseData.message || 'Erro ao processar o PDF');
@@ -120,6 +152,101 @@ document.addEventListener('DOMContentLoaded', function() {
             // Ocultar progresso e reabilitar botão
             progressContainer.classList.add('d-none');
             submitBtn.disabled = false;
+        }
+    });
+    
+    // Manipular envio do formulário para converter PDF para imagem
+    convertForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        // Ocultar mensagens anteriores
+        hideError();
+        resultContainer.classList.add('d-none');
+        
+        const file = convertFileInput.files[0];
+        const password = convertPasswordInput.value;
+        
+        if (!file) {
+            showError('Por favor, selecione um arquivo PDF');
+            return;
+        }
+        
+        try {
+            // Mostrar progresso
+            convertBtn.disabled = true;
+            progressContainer.classList.remove('d-none');
+            
+            // Converter o arquivo para Base64
+            const fileBase64 = await convertFileToBase64(file);
+            
+            // Preparar os dados para enviar
+            const requestData = {
+                pdfBase64: fileBase64
+            };
+            
+            // Adicionar senha apenas se tiver sido fornecida
+            if (password) {
+                requestData.password = password;
+            }
+            
+            // Enviar para a API
+            const response = await fetch(API_ENDPOINTS.pdfToImage, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestData)
+            });
+            
+            // Processar resposta
+            const responseData = await response.json();
+            
+            if (response.ok) {
+                let downloadUrl, fileExtension, downloadText;
+                
+                // Verificar se há dados de imagem na resposta
+                if (responseData.image_base64) {
+                    const content = responseData.image_base64.content;
+                    const type = responseData.image_base64.type;
+                    
+                    if (type === 'image') {
+                        // Se for uma imagem
+                        downloadUrl = `data:image/png;base64,${content}`;
+                        fileExtension = '.png';
+                        downloadText = "Baixar Imagem";
+                    } else if (type === 'zip') {
+                        // Se for um arquivo ZIP
+                        downloadUrl = `data:application/zip;base64,${content}`;
+                        fileExtension = '.zip';
+                        downloadText = "Baixar Arquivo ZIP";
+                    } else {
+                        throw new Error("Tipo de resposta não reconhecido");
+                    }
+                    
+                    // Configurar botão de download
+                    downloadBtn.href = downloadUrl;
+                    downloadBtn.download = getOutputFilename(file.name, '-convertido', fileExtension);
+                    downloadBtnText.textContent = downloadText;
+                    
+                    // Configurar mensagem
+                    resultMessage.textContent = "PDF convertido com sucesso!";
+                    
+                    // Mostrar container de resultado
+                    showDownloadModal(downloadUrl, getOutputFilename(file.name, '-convertido', fileExtension), "PDF convertido com sucesso!");
+                } else {
+                    showError('Formato de resposta inválido');
+                }
+            } else {
+                // Erro retornado pela API
+                showError(responseData.error || responseData.message || 'Erro ao converter o PDF');
+            }
+        } catch (error) {
+            showError('Ocorreu um erro ao se comunicar com o servidor');
+            console.error('Erro:', error);
+        } finally {
+            // Ocultar progresso e reabilitar botão
+            progressContainer.classList.add('d-none');
+            convertBtn.disabled = false;
         }
     });
     
@@ -138,11 +265,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Função para gerar o nome do arquivo de saída
-    function getOutputFilename(originalName) {
+    function getOutputFilename(originalName, suffix, newExtension) {
         const nameParts = originalName.split('.');
-        const extension = nameParts.pop();
+        const extension = newExtension || '.' + nameParts.pop();
         const baseName = nameParts.join('.');
-        return `${baseName}-sem-senha.${extension}`;
+        return `${baseName}${suffix}${extension}`;
     }
     
     // Função para mostrar erro
@@ -154,5 +281,24 @@ document.addEventListener('DOMContentLoaded', function() {
     // Função para ocultar erro
     function hideError() {
         errorContainer.classList.add('d-none');
+    }
+
+    // Função para mostrar o download no modal em vez do container de resultado
+    function showDownloadModal(downloadUrl, fileName, message) {
+        // Apenas atualizar o título do modal de acordo com a operação
+        document.getElementById('downloadModalLabel').textContent = message || 'PDF processado com sucesso!';
+        
+        const downloadBtn = document.getElementById('modalDownloadBtn');
+        downloadBtn.href = downloadUrl;
+        downloadBtn.download = fileName;
+        // Usar texto fixo para o botão de download
+        document.getElementById('modalDownloadBtnText').textContent = "Clique aqui para baixar o arquivo!";
+        
+        // Exibir o modal
+        var downloadModal = new bootstrap.Modal(document.getElementById('downloadModal'));
+        downloadModal.show();
+        
+        // Esconder o indicador de progresso
+        document.getElementById('progressContainer').classList.add('d-none');
     }
 });
