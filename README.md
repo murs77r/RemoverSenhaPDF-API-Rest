@@ -33,26 +33,7 @@ O processo é simples e rápido:
 
 ## 🌐 Implantação
 
-A aplicação está implantada na plataforma Koyeb, oferecendo:
-
-- **Alta Disponibilidade**: Serviço disponível 24/7
-- **Escalabilidade**: Recursos adaptados conforme a demanda
-- **Segurança**: Conexões HTTPS e processamento seguro dos documentos
-
-## ⚙️ API
-
-O serviço utiliza a API em:
-```
-https://api.class-one.com.br/remove-pdf-password
-```
-
-A API aceita requisições POST com o seguinte formato:
-```json
-{
-  "pdfBase64": "string_base64_do_arquivo",
-  "password": "senha_do_pdf"
-}
-```
+A aplicação está implantada no Cloudflare Pages, com utilização específica para a API disponível no seguinte respositório: [Github](https://github.com/murs77r/RemoverSenhaPDF-WebService).
 
 ## 📋 Limitações
 
