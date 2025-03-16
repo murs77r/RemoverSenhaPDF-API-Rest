@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Configurações
     const API_ENDPOINTS = {
-        removePassword: 'http://127.0.0.1:5000/remove-pdf-password',
-        pdfToImage: 'http://127.0.0.1:5000/pdf-to-image'
+        removePassword: 'https://api.class-one.com.br/remove-pdf-password',
+        pdfToImage: 'https://api.class-one.com.br/pdf-to-image'
     };
     const MAX_FILE_SIZE_MB = 3;
     
