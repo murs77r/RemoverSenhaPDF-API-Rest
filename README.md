@@ -1,6 +1,6 @@
-# 🔄 Ferramentas para PDF
+# 🔄 Interface WEB para Ferramentas PDFs 📊
 
-Esta aplicação web oferece ferramentas úteis para manipulação de arquivos PDF de forma simples, segura e eficiente. Utilizando uma API REST, o serviço processa os documentos sem armazenar informações em servidores.
+Esta aplicação Web oferece ferramentas úteis para manipulação de arquivos PDF de forma simples, segura e eficiente. Utilizando uma API REST, o serviço processa os documentos sem armazenar informações em servidores.
 
 ## ✨ Funcionalidades
 
